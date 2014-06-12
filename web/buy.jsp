@@ -1,8 +1,4 @@
-<%-- 
-    Document   : buy
-    Created on : May 15, 2012, 6:59:04 PM
-    Author     : Diaa
---%>
+
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>

@@ -1,8 +1,3 @@
-<%-- 
-    Document   : Login
-    Created on : 2014-06-11, 08:22:06
-    Author     : User
---%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>

@@ -1,8 +1,3 @@
-<%-- 
-    Document   : deleteRecord
-    Created on : May 15, 2012, 4:34:45 PM
-    Author     : Diaa
---%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>

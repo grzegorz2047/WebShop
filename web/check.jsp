@@ -1,8 +1,4 @@
-<%-- 
-    Document   : check
-    Created on : May 15, 2012, 12:18:10 PM
-    Author     : Diaa
---%>
+
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>

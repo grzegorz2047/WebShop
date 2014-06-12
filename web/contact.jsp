@@ -1,8 +1,3 @@
-<%-- 
-    Document   : contact
-    Created on : 2014-06-12, 09:29:45
-    Author     : User
---%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
