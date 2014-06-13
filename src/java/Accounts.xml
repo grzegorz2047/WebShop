@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="sql.tables.Accounts">
+        <id name="accountid">
+            <generator class="native" />
+        </id>
+        <property name="name" />
+        <property name="lastname" />
+        <property name="address" />
+        <property name="email" />
+        <property name="username" />
+        <property name="password" />
+        <property name="token" />
+        <property name="activated" />
+    </class>
+</hibernate-mapping>

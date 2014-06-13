@@ -14,7 +14,7 @@
             var address=document.register.address.value;
             var password=document.register.password.value;
             var email = document.register.email.value;
-            var nickname = document.register.nickname.value;
+            var username = document.register.username.value;
         if(name==""){
             alert("Wpisz imie!");
             return false;
@@ -31,7 +31,7 @@
             alert("Wpisz adres email");
             return false;
         }
-        if(nickname==""){
+        if(username==""){
             alert("Wpisz ksywke!");
             return false;
         }
@@ -77,9 +77,9 @@
               </div>
             </div>
             <div class="form-group">
-              <label for="inputNickname" class="col-lg-2 control-label">Nick</label>
+              <label for="inputUsername" class="col-lg-2 control-label">Nick</label>
               <div class="col-lg-10">
-                <input name="nickname" type="text" class="form-control" id="inputNickname" placeholder="Nick">
+                <input name="username" type="text" class="form-control" id="inputUsername" placeholder="Nick">
               </div>
             </div>
             <div class="form-group">
