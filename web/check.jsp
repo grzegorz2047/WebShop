@@ -7,10 +7,10 @@
 <%
 String user=request.getParameter("user");
 String pass=request.getParameter("pass");
- Class.forName("com.mysql.jdbc.Driver").newInstance();
-    Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/onlineshop","root","root");  
+ Class.forName("org.postgresql.Driver").newInstance();
+    Connection con = DriverManager.getConnection("jdbc:postgresql://5.231.53.149:5432/webshop","root","root");
            Statement st=con.createStatement();
-           ResultSet rs=st.executeQuery("select AdminName,AdminPass from admins where AdminName='"+user+"' and AdminPass='"+pass+"'");
+           /*ResultSet rs=st.executeQuery("select AdminName,AdminPass from admins where AdminName='"+user+"' and AdminPass='"+pass+"'");
           int count=0;
           while(rs.next())
           {
@@ -27,5 +27,5 @@ String pass=request.getParameter("pass");
           else
           {
                        response.sendRedirect("login.jsp?msg=Invalid Username or Password");
-          }
+          }*/
 %>
