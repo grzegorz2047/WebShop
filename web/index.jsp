@@ -67,7 +67,7 @@
   <div class="alert alert-dismissable alert-warning">
   <button type="button" class="close" data-dismiss="alert">×</button>
   <h4>Uwaga!</h4>
-  <p>Strona uzywa plików cookies, aby zapewnic funkcjonowanie pewnych możliwości na stronie. <a href="http://wszystkoociasteczkach.pl/" class="alert-link">Wiecej informacji tutaj</a>.</p>
+  <p>Strona uzywa plików cookies, aby zapewnic działanie różnych funkcji na stronie. <a href="http://wszystkoociasteczkach.pl/" class="alert-link">Wiecej informacji o ciasteczkach tutaj</a>.</p>
 </div>
 <script>
 function displayMsg() {

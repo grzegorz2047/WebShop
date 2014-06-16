@@ -9,6 +9,7 @@ package servlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import javax.servlet.ServletException;
@@ -21,6 +22,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import sql.tables.Accounts;
 import utils.HibernateUtil;
+import utils.MailSender;
 
 /**
  *
@@ -45,7 +47,7 @@ public class RegisterServlet extends HttpServlet {
             String name = request.getParameter("name");
             String lastname = request.getParameter("lastname");
             String email = request.getParameter("email");
-            String nickname = request.getParameter("username");
+            String username = request.getParameter("username");
             String address = request.getParameter("address");
             String password = request.getParameter("password");
             String token="";
@@ -54,28 +56,31 @@ public class RegisterServlet extends HttpServlet {
             for(int i=0; i<71;i++){
                 token+=rand.nextInt(10);
             }
-            Accounts account = new Accounts(nickname, password, name, lastname, address, email, token);
-            account.setActivated("N");
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
             out.println("<title>Rejestracja</title>");            
             out.println("</head>");
             out.println("<body>");
-            if(name.equals("")|| lastname.equals("")|| email.equals("")|| nickname.equals("")|| address.equals("")|| password.equals("")){
+            if(name.equals("")|| lastname.equals("")|| email.equals("")|| username.equals("")|| address.equals("")|| password.equals("")){
                 out.println("<script>alert(Uzupenij wszystkie pola danymi!);</script>");
                 out.println("<meta http-equiv=\"refresh\" content=\"0; url=WebShop/register.jsp\"/>");
                 out.println("</body>");
                 out.println("</html>");
                 return;
             }
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            
+            Accounts account = new Accounts(username, password, name, lastname, address, email, token);
+            account.setActivated("N");
+            Session session = HibernateUtil.getSessionFactory().openSession();
             Transaction transaction = session.beginTransaction();
-            Query query = session.createQuery("Select A.username from Accounts A where A.username = :username ");
-            query.setParameter("username", account.getUsername());
-            List list = query.list();
-            if(!list.isEmpty()){
+            List<String> list = getListOfUsername();
+            if(list.contains(username)){
                 out.println("<script>alert(Ta nazwa uzytkownika juz istnieje!);</script>");
+                out.println("<h1>Konto istnieje!</h1>");
+                out.println("</body>");
+                out.println("</html>");
+                return;
             }
             out.println("<h1>Pomyslnie zostales zarejestrowany!</h1>");
             out.println("<h1>Sprawdz swoja skrzynke email po klucz aktywacyjny.</h1>");
@@ -83,8 +88,10 @@ public class RegisterServlet extends HttpServlet {
             //out.println("<h1>Servlet Register at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
+            out.close();
             session.save(account);
             transaction.commit();
+            new MailSender("localhost","WebShop",account.getEmail(),"Token aktywacyjny to "+token+"\n Aby aktywowac konto wejdz na te strone:tojeststrona.pl","Aktywacja konta");
         }
  
         
@@ -129,5 +136,26 @@ public class RegisterServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
+    public List<String> getListOfUsername(){
+        List<String> list = new ArrayList<String>();
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;        
+        try {
+            tx = session.getTransaction();
+            tx.begin();
+            
+            Query query = session.createQuery("select a.username from Accounts a");
+            list = query.list();
+                   
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return list;
+    }
 }
