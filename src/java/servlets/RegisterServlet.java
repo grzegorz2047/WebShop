@@ -91,7 +91,7 @@ public class RegisterServlet extends HttpServlet {
             out.close();
             session.save(account);
             transaction.commit();
-            new MailSender("localhost","WebShop",account.getEmail(),"Token aktywacyjny to "+token+"\n Aby aktywowac konto wejdz na te strone:tojeststrona.pl","Aktywacja konta");
+            new MailSender("localhost","grzegorz2047@tlen.pl",account.getEmail(),"Token aktywacyjny to "+token+"\n Aby aktywowac konto wejdz na te strone:tojeststrona.pl","Aktywacja konta");
         }
  
         

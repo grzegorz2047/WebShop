@@ -78,13 +78,27 @@ public class MailSender {
     }
     
     private MimeMessage createMessageObj(){
-        Properties properties = System.getProperties();
-        properties.setProperty("mail.smtp.host",host);
-        Session session =  Session.getDefaultInstance(properties);
+        String smtpHostServer = "5.231.53.149";
+         
+        Properties props = System.getProperties();
+ 
+        props.put("mail.smtp.host", smtpHostServer);
+        props.put("mail.smtp.port",25);
+        props.put("mail.smtp.auth", true);
+        Authenticator authenticator = null;
+            authenticator = new Authenticator() {
+                private PasswordAuthentication pa = new PasswordAuthentication("bobby@kraft.czest.pl", "qweasdzxc");
+                @Override
+                public PasswordAuthentication getPasswordAuthentication() {
+                    return pa;
+                }
+            };
+        Session session = Session.getInstance(props, authenticator);
         MimeMessage message = new MimeMessage(session);       
         try {
             message.setFrom(this.from);
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(this.to));
+            message.setSubject(this.subject);
             message.setText(this.msg);
             System.out.println("Pomyslnie wyslano wiadomosc email do skrzynki!");
         } catch (MessagingException ex) {
