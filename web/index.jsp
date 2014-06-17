@@ -2,16 +2,20 @@
 <!DOCTYPE html>
 <%@ page language="java" import="java.sql.*" errorPage="" %>
 <%
+    String login = "dbuser";
+    String password = "pcss";
+    String database = "webshop";
+    String port = "5432";
     Connection conn = null;
 
     Class.forName("org.postgresql.Driver").newInstance();
-    conn = DriverManager.getConnection("jdbc:postgresql://5.231.53.149:5432/webshop","root","root");
+    conn = DriverManager.getConnection("jdbc:postgresql://5.231.53.149:"+port+"/"+database,login, password);
 
     PreparedStatement psSelectRecord=null;
     ResultSet rsSelectRecord=null;
     String sqlSelectRecord=null;
 
-    sqlSelectRecord ="SELECT productid, title, description, price FROM Products";
+    sqlSelectRecord ="SELECT productid, title, description, price FROM products";
     psSelectRecord = conn.prepareStatement(sqlSelectRecord);
     rsSelectRecord = psSelectRecord.executeQuery();
 %>
@@ -27,6 +31,7 @@
  <div class='cssmenu'>
 <ul>
    <li class='active '><a href='index.jsp'><span>Strona główna</span></a></li>
+   <li><a href='index.jsp'><span>O stronie</span></a></li>
    <li><a href='login.jsp'><span>Login</span></a></li>
    <li><a href='index.jsp'><span>O stronie</span></a></li>
    <li><a href='contact.jsp'><span>Kontakt</span></a></li>

@@ -83,11 +83,11 @@ public class MailSender {
         Properties props = System.getProperties();
  
         props.put("mail.smtp.host", smtpHostServer);
-        props.put("mail.smtp.port",25);
+        props.put("mail.smtp.port",197);
         props.put("mail.smtp.auth", true);
         Authenticator authenticator = null;
             authenticator = new Authenticator() {
-                private PasswordAuthentication pa = new PasswordAuthentication("bobby@kraft.czest.pl", "qweasdzxc");
+                private PasswordAuthentication pa = new PasswordAuthentication("mailuser@kraft.czest.pl", "pcss");
                 @Override
                 public PasswordAuthentication getPasswordAuthentication() {
                     return pa;
