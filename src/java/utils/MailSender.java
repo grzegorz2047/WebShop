@@ -78,22 +78,23 @@ public class MailSender {
     }
     
     private MimeMessage createMessageObj(){
-        String smtpHostServer = "5.231.53.149";
-         
+        String smtpHostServer = "smtp.gmail.com";
+        final String username = "pcsstestusermail@gmail.com";
+        final String password = "xxxxxxx";
         Properties props = System.getProperties();
  
         props.put("mail.smtp.host", smtpHostServer);
-        props.put("mail.smtp.port",197);
-        props.put("mail.smtp.auth", true);
-        Authenticator authenticator = null;
-            authenticator = new Authenticator() {
-                private PasswordAuthentication pa = new PasswordAuthentication("mailuser@kraft.czest.pl", "pcss");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.port", "587");
+        
+        Session session = Session.getInstance(props,
+          new javax.mail.Authenticator() {
                 @Override
-                public PasswordAuthentication getPasswordAuthentication() {
-                    return pa;
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(username, password);
                 }
-            };
-        Session session = Session.getInstance(props, authenticator);
+          });
         MimeMessage message = new MimeMessage(session);       
         try {
             message.setFrom(this.from);
