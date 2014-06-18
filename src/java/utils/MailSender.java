@@ -79,8 +79,8 @@ public class MailSender {
     
     private MimeMessage createMessageObj(){
         String smtpHostServer = "smtp.gmail.com";
-        final String username = "pcsstestusermail@gmail.com";
-        final String password = "xxxxxxx";
+        final String username = "xxxx";
+        final String password = "xxx";
         Properties props = System.getProperties();
  
         props.put("mail.smtp.host", smtpHostServer);

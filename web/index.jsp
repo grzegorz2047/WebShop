@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <%@ page language="java" import="java.sql.*" errorPage="" %>
 <%
+    String site = "http://localhost:8080/WebShop/";
     String login = "dbuser";
     String password = "pcss";
     String database = "webshop";
@@ -26,18 +27,24 @@
 <title>Sklep - Strona główna</title>
 </head>
 <body>
-
- <div align="center">
- <div class='cssmenu'>
-<ul>
-   <li class='active '><a href='index.jsp'><span>Strona główna</span></a></li>
-   <li><a href='index.jsp'><span>O stronie</span></a></li>
-   <li><a href='login.jsp'><span>Login</span></a></li>
-   <li><a href='index.jsp'><span>O stronie</span></a></li>
-   <li><a href='contact.jsp'><span>Kontakt</span></a></li>
-</ul>
-</div> 
- </div>
+<div class="navbar navbar-default">
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="index.jsp">Sklep internetowy</a>
+  </div>
+  <div class="navbar-collapse collapse navbar-responsive-collapse">
+    <ul class="nav navbar-nav">
+      <li><a href="register.jsp">Rejestracja</a></li>
+      <li><a href="login.jsp">Logowanie</a></li>
+      <li><a href="contact.jsp">Kontakt</a></li>
+      <li><a href="activate.jsp">Aktywacja konta</a></li>
+    </ul>
+  </div>
+</div>
  <div align="center">
      <h1>Dostępne produkty</h1>
  <table class="table table-striped table-hover ">
@@ -60,7 +67,7 @@
    <td><%=rsSelectRecord.getString("title")%></td>
    <td><%=rsSelectRecord.getString("description")%></td>
    <td><%=rsSelectRecord.getString("price")%></td> 
-   <td><b><span lang="pl-pl"><a href="buy.jsp" onclick='displayMsg();'>DODAJ</a></span></b></td>
+   <td><b><span lang="pl-pl"><a name="add" id="add" href="buy.jsp" onclick='displayMsg();'>DODAJ</a></span></b></td>
    <tr>
   <br>
   <%

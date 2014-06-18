@@ -1,26 +1,33 @@
+<%-- 
+    Document   : activate
+    Created on : 2014-06-18, 09:23:57
+    Author     : User
+--%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head>        
+    <script>
+        function validate(){
+            var email = document.activate.email.value;
+            var token = document.activate.token.value;
+        if(email==""){
+            alert("Wpisz email!");
+            return false;
+        }
+        if(token==""){
+            alert("Wpisz token!");
+            return false;
+        }
+        return true;
+        }
+    </script>
+    <head>
         <link href="menustuff/styles/bootstrap.min.css" rel="stylesheet">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Aktywacja konta</title>
     </head>
     <body>
-        <script>
-            function validate(){
-            var username=document.login.email.value;
-            var password=document.login.password.value;
-            if(username==""){
-             alert("Enter Username!");
-              return false;
-            }
-            if(password==""){
-             alert("Enter Password!");
-              return false;
-            }
-            return true;
-            }
-        </script>
         <div class="navbar navbar-default">
           <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
@@ -39,7 +46,8 @@
             </ul>
           </div>
         </div>
-        <form class="form-horizontal" name="login" method="post" action="ActivateServlet" onsubmit="javascript:return validate();">
+        <h1>Wpisz swój email oraz otrzymany token</h1>
+        <form class="form-horizontal" name="activate" method="post" action="ActivateServlet" onsubmit="javascript:return validate();">
           <fieldset>
             <div class="form-group">
               <label for="inputEmail" class="col-lg-2 control-label">Email</label>
@@ -48,9 +56,9 @@
               </div>
             </div>
             <div class="form-group">
-              <label for="inputPassword" class="col-lg-2 control-label">Password</label>
+              <label for="inputToken" class="col-lg-2 control-label">Token</label>
               <div class="col-lg-10">
-                <input name="password" type="password" class="form-control" id="inputPassword" placeholder="Password">
+                <input name="token" type="token" class="form-control" id="inputToken" placeholder="Token">
               </div>
             </div>
             <div class="form-group">

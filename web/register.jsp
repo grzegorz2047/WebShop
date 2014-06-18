@@ -27,8 +27,8 @@
             alert("Wpisz adres zamieszkania!");
             return false;
         }
-        if(email==""){
-            alert("Wpisz adres email");
+        if(email=="" || indexOf('@') === -1){
+            alert("Wpisz  poprawny adres email");
             return false;
         }
         if(username==""){
@@ -48,6 +48,24 @@
         <title>Rejestracja użytkownika</title>
     </head>
     <body>
+        <div class="navbar navbar-default">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.jsp">Sklep internetowy</a>
+          </div>
+          <div class="navbar-collapse collapse navbar-responsive-collapse">
+            <ul class="nav navbar-nav">
+              <li><a href="register.jsp">Rejestracja</a></li>
+              <li><a href="login.jsp">Logowanie</a></li>
+              <li><a href="contact.jsp">Kontakt</a></li>
+              <li><a href="activate.jsp">Aktywacja konta</a></li>
+            </ul>
+          </div>
+        </div>
         <form class="form-horizontal" name="register" method="post" action="RegisterServlet" onsubmit="javascript:return validate();"  >
             <!-- method="post" action="check.jsp" -->
           <fieldset>

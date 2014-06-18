@@ -21,6 +21,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import sql.tables.Accounts;
+import utils.EmailValidator;
 import utils.HibernateUtil;
 import utils.MailSender;
 
@@ -40,6 +41,7 @@ public class RegisterServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    String site = "http://localhost:8080/WebShop/activate.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -58,13 +60,24 @@ public class RegisterServlet extends HttpServlet {
             }
             out.println("<!DOCTYPE html>");
             out.println("<html>");
-            out.println("<head>");
+            out.println("<head>");      
+            out.println("<link href=menustuff/styles/bootstrap.min.css rel=stylesheet>");      
             out.println("<title>Rejestracja</title>");            
             out.println("</head>");
             out.println("<body>");
             if(name.equals("")|| lastname.equals("")|| email.equals("")|| username.equals("")|| address.equals("")|| password.equals("")){
-                out.println("<script>alert(Uzupenij wszystkie pola danymi!);</script>");
-                out.println("<meta http-equiv=\"refresh\" content=\"0; url=WebShop/register.jsp\"/>");
+                out.println("<h1>Uzupelnij wszystkie pola danymi!</h1>");
+                out.println("<script>alert(Uzupelnij wszystkie pola danymi!);</script>");
+                out.println("<meta http-equiv=\"refresh\" content=\"5; url=register.jsp\"/>");
+                out.println("</body>");
+                out.println("</html>");
+                return;
+            }
+            EmailValidator emailValidator = new EmailValidator();
+            if(!emailValidator.validate(email)){
+                out.println("<h1>Podales nieprawidlowy email!</h1>");
+                out.println("<script>alert(Podales nieprawidlowy email!);</script>");
+                out.println("<meta http-equiv=\"refresh\" content=\"5; url=register.jsp\"/>");
                 out.println("</body>");
                 out.println("</html>");
                 return;
@@ -74,24 +87,26 @@ public class RegisterServlet extends HttpServlet {
             account.setActivated("N");
             Session session = HibernateUtil.getSessionFactory().openSession();
             Transaction transaction = session.beginTransaction();
-            List<String> list = getListOfUsername();
-            if(list.contains(username)){
-                out.println("<script>alert(Ta nazwa uzytkownika juz istnieje!);</script>");
-                out.println("<h1>Konto istnieje!</h1>");
+            List<String> list = getListOfUsername(username, email);
+            if(!list.isEmpty()){
+                out.println("<script>alert(Ten email lub nazwa uzytkownika juz zajeta!);</script>");
+                out.println("<meta http-equiv=\"refresh\" content=\"5; url=register.jsp\"/>");
+                out.println("<h1>Ten email lub nazwa uzytkownika juz zajeta!</h1>");
                 out.println("</body>");
                 out.println("</html>");
                 return;
             }
-            out.println("<h1>Pomyslnie zostales zarejestrowany!</h1>");
+            out.println("<h1>Zostales pomyslnie zarejestrowany!</h1>");
             out.println("<h1>Sprawdz swoja skrzynke email po klucz aktywacyjny.</h1>");
-            out.println("token to "+token);
+            out.println("<meta http-equiv=\"refresh\" content=\"10; url=activate.jsp\"/>");
+            //out.println("token to "+token);
             //out.println("<h1>Servlet Register at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
             out.close();
             session.save(account);
             transaction.commit();
-            new MailSender("localhost","grzegorz2047@tlen.pl",account.getEmail(),"Token aktywacyjny to "+token+"\n Aby aktywowac konto wejdz na te strone:tojeststrona.pl","Aktywacja konta");
+            //new MailSender("localhost","grzegorz2047@tlen.pl",account.getEmail(),"Token aktywacyjny to \n"+token+"\n Aby aktywowac konto wejdz na te strone:\n"+site,"Aktywacja konta");
         }
  
         
@@ -136,7 +151,7 @@ public class RegisterServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-    public List<String> getListOfUsername(){
+    public List<String> getListOfUsername(String username, String email){
         List<String> list = new ArrayList<String>();
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;        
@@ -144,9 +159,8 @@ public class RegisterServlet extends HttpServlet {
             tx = session.getTransaction();
             tx.begin();
             
-            Query query = session.createQuery("select a.username from Accounts a");
+            Query query = session.createQuery("select a.username from Accounts a WHERE a.username='"+username+"' OR a.email='"+email+"'");
             list = query.list();
-                   
             tx.commit();
         } catch (Exception e) {
             if (tx != null) {
